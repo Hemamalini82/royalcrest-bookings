@@ -18,11 +18,11 @@ const bookingSchema = z.object({
 }).refine(data => data.checkin >= new Date().toLocaleDateString("en-CA"), { message: "Check-in cannot be in the past.", path: ["checkin"] }).refine(data => data.checkout > data.checkin, { message: "Check-out must be after check-in.", path: ["checkout"] }).refine(data => { const maxGuests = data.room === "Royal Suite" ? 4 : data.room === "Executive Suite" ? 3 : 2; return data.guests <= maxGuests; }, { message: "This room cannot accommodate that many guests.", path: ["guests"] });
 
 export const Route = createFileRoute("/book")({
-  validateSearch: (search: Record<string, unknown>) => ({ room: typeof search.room === "string" && rooms.some(r => r.name === search.room) ? search.room : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ room: typeof search["room"] === "string" && rooms.some(r => r.name === search["room"]) ? search["room"] : undefined }),
   head: () => ({ meta: [{ title: "Book Your Stay | Royal Crest Hotel" }, { name: "description", content: "Choose your room and dates at Royal Crest Hotel. Try the booking form and see your stay summary instantly." }, { property: "og:title", content: "Book Your Stay | Royal Crest Hotel" }, { property: "og:description", content: "Plan your next stay at Royal Crest Hotel." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: BookingPage,
 });
-export function BookingSection({ embedded = false, room }: { embedded?: boolean; room?: string }) {
+export function BookingSection({ embedded = false, room }: { embedded?: boolean; room?: string | undefined }) {
   const [error, setError] = useState("");
   const [confirmation, setConfirmation] = useState<{ name: string; room: string; checkin: string; checkout: string; guests: number; total: number } | null>(null);
   const today = new Date().toLocaleDateString("en-CA");

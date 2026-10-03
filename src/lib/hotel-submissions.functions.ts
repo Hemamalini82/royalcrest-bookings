@@ -9,7 +9,7 @@ export const submitBooking = createServerFn({ method: "POST" }).inputValidator((
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const nights = Math.round((Date.parse(`${data.checkout}T12:00:00Z`) - Date.parse(`${data.checkin}T12:00:00Z`)) / 86400000);
   if (!Number.isFinite(nights) || nights < 1 || nights > 90) throw new Error("Choose a stay between 1 and 90 nights.");
-  const total = nights * rates[data.room];
+  const total = nights * (rates[data.room] ?? 3999);
   const { error } = await supabaseAdmin.from("booking_requests").insert({ guest_name: data.name, email: data.email, phone: data.phone, checkin: data.checkin, checkout: data.checkout, guests: data.guests, room_type: data.room, estimated_total: total });
   if (error) throw new Error("We could not save your booking request. Please try again.");
   return { total };

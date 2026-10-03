@@ -9,7 +9,7 @@ import { rooms } from "@/lib/hotel-data";
 import dining from "@/assets/dining.jpg";
 import pool from "@/assets/pool.jpg";
 
-export const Route = createFileRoute("/")({ head: () => ({ meta: [
+export const Route = createFileRoute("/")({ validateSearch: (search: Record<string, unknown>) => ({ room: typeof search["room"] === "string" ? search["room"] : undefined }), head: () => ({ meta: [
   { title: "Royal Crest Hotel | Luxury, Comfort & Elegance" },
   { name: "description", content: "Explore elegant rooms, dining, facilities and location at Royal Crest Hotel, and send your booking request online." },
   { property: "og:title", content: "Royal Crest Hotel | Luxury, Comfort & Elegance" },
@@ -27,7 +27,7 @@ const facilities = [
 ];
 
 function Index() {
-  const room = typeof window === "undefined" ? undefined : new URLSearchParams(window.location.search).get("room") ?? undefined;
+  const { room } = Route.useSearch();
   return <>
     <section id="home" className="hero"><div className="container hero-content"><div className="eyebrow"><span className="eyebrow-line"/> WELCOME TO ROYAL CREST <span className="eyebrow-line"/></div><h1>Royal Crest <em>Hotel</em></h1><p className="hero-tagline">Luxury • Comfort • Elegance</p><p>Where timeless elegance meets a stay that feels entirely your own.</p><div className="hero-actions"><Button asChild variant="gold"><a href="#book">Book Your Stay <ArrowUpRight size={17}/></a></Button><Button asChild variant="outlineGold"><a href="#rooms">Explore Rooms <ArrowUpRight size={17}/></a></Button></div><div className="hero-proof"><span><Star size={15}/> Thoughtful luxury</span><i/><span><MapPin size={15}/> Memorable setting</span><i/><span><Wifi size={15}/> Comfort in every detail</span></div></div></section>
     <section id="about" className="section-band"><div className="container split-layout"><img className="split-image" src={pool} alt="Royal Crest poolside lounge" loading="lazy"/><div className="split-copy"><SectionHeading eyebrow="ABOUT ROYAL CREST" title="The art of feeling at home"/><p>Royal Crest Hotel is a place to slow down, settle in, and enjoy the finer moments. Our inviting spaces bring together timeless style and modern comfort, with a warm welcome waiting at every turn.</p><p>Whether you're visiting for a weekend away or a change of scenery, make each stay distinctly yours.</p></div></div></section>
