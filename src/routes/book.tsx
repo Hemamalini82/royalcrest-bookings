@@ -22,8 +22,7 @@ export const Route = createFileRoute("/book")({
   head: () => ({ meta: [{ title: "Book Your Stay | Royal Crest Hotel" }, { name: "description", content: "Choose your room and dates at Royal Crest Hotel. Try the booking form and see your stay summary instantly." }, { property: "og:title", content: "Book Your Stay | Royal Crest Hotel" }, { property: "og:description", content: "Plan your next stay at Royal Crest Hotel." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   component: BookingPage,
 });
-export function BookingSection({ embedded = false }: { embedded?: boolean }) {
-  const { room } = Route.useSearch();
+export function BookingSection({ embedded = false, room }: { embedded?: boolean; room?: string }) {
   const [error, setError] = useState("");
   const [confirmation, setConfirmation] = useState<{ name: string; room: string; checkin: string; checkout: string; guests: number; total: number } | null>(null);
   const today = new Date().toLocaleDateString("en-CA");
@@ -57,4 +56,4 @@ export function BookingSection({ embedded = false }: { embedded?: boolean }) {
   <aside className="info-panel"><h3>A stay worth looking forward to</h3><p>Everything you need to make your visit feel effortless, from the moment you arrive.</p><div className="info-item"><CalendarDays size={21}/><div><strong>Flexible planning</strong><span>Explore your dates and find the room that fits.</span></div></div><div className="info-item"><ShieldCheck size={21}/><div><strong>Clear room rates</strong><span>Room prices are shown per night in Indian rupees.</span></div></div><div className="info-item"><Clock3 size={21}/><div><strong>Need a hand?</strong><span>Visit our contact page with any questions about your stay.</span></div></div></aside></div></section></>;
 }
 
-function BookingPage() { return <BookingSection/>; }
+function BookingPage() { const { room } = Route.useSearch(); return <BookingSection room={room}/>; }
