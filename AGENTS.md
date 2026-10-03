@@ -1,10 +1,3 @@
-<!-- LOVABLE:BEGIN -->
-> [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
-> published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
-> user will likely lose their project history.
->
-> Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
-<!-- LOVABLE:END -->
+- Keep the hotel experience on one scrollable home route with anchor navigation, because the requested primary journey is a single continuous page.
+- Keep one fixed hotel photograph behind translucent content bands, because every section must share the same backdrop.
+- Store booking and contact requests through server functions into private Cloud tables, because a visible success state must represent a saved inquiry.

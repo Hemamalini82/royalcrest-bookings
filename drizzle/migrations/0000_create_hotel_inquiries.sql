@@ -1,0 +1,6 @@
+CREATE TABLE public.booking_requests (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), created_at timestamptz NOT NULL DEFAULT now(), guest_name text NOT NULL CHECK (char_length(guest_name) BETWEEN 2 AND 100), email text NOT NULL CHECK (char_length(email) <= 255), phone text NOT NULL CHECK (char_length(phone) BETWEEN 7 AND 20), checkin date NOT NULL, checkout date NOT NULL, guests integer NOT NULL CHECK (guests BETWEEN 1 AND 4), room_type text NOT NULL CHECK (room_type IN ('Deluxe Room','Premium Room','Executive Suite','Royal Suite')), estimated_total integer NOT NULL CHECK (estimated_total > 0));
+GRANT ALL ON public.booking_requests TO service_role;
+ALTER TABLE public.booking_requests ENABLE ROW LEVEL SECURITY;
+CREATE TABLE public.contact_submissions (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), created_at timestamptz NOT NULL DEFAULT now(), name text NOT NULL CHECK (char_length(name) BETWEEN 2 AND 100), email text NOT NULL CHECK (char_length(email) <= 255), subject text NOT NULL CHECK (char_length(subject) BETWEEN 2 AND 120), message text NOT NULL CHECK (char_length(message) BETWEEN 10 AND 1000));
+GRANT ALL ON public.contact_submissions TO service_role;
+ALTER TABLE public.contact_submissions ENABLE ROW LEVEL SECURITY;
